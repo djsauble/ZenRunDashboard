@@ -11,7 +11,7 @@ import {RunService} from './run.service';
     <h1>Forrest Cruise Dashboard</h1>
     <ul>
       <li *ngFor="let run of runs">
-        Run: {{run.id}}
+        {{run.timestamp}}
       </li>
     </ul>
   `,

@@ -1,4 +1,5 @@
 export class Run {
-  id: number;
-  distance: number;
+  _id: number;
+  created_by: string;
+  timestamp: string;
 }

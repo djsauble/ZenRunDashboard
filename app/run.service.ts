@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 export class RunService {
   constructor(private http: Http) { }
 
-  private runsUrl = 'https://djsauble.cloudant.com/be7b25ca3682ef8a15682f791c6110648152d7e4/_all_docs'; // URL to web api
+  private runsUrl = 'https://djsauble.cloudant.com/be7b25ca3682ef8a15682f791c6110648152d7e4/_all_docs?include_docs=true'; // URL to web api
 
   getRuns (): Observable<Run[]> {
     return this.http.get(this.runsUrl, {
@@ -26,7 +26,7 @@ export class RunService {
       throw new Error('Bad response status: ' + res.status);
     }
     let body = res.json();
-    return body.rows || { };
+    return body.rows.map(r => r.doc) || { };
   }
 
   private handleError (error: any) {
