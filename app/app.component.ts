@@ -29,7 +29,9 @@ export class AppComponent implements OnInit {
   getRuns() {
     this.runService.getRuns()
                      .subscribe(
-                       runs => this.runs = runs,
+                       runs => this.runs = runs.sort((a: Run, b: Run) => {
+                         return (new Date(b.timestamp)) - (new Date(a.timestamp));
+                       }),
                        error => this.errorMessage = <any>error);
   }
 
