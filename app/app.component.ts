@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
+import {HTTP_PROVIDERS} from '@angular/http';
 
 import {Run} from './run';
 import {RunService} from './run.service';
@@ -10,19 +11,26 @@ import {RunService} from './run.service';
     <h1>Forrest Cruise Dashboard</h1>
     <ul>
       <li *ngFor="let run of runs">
-        Distance: {{run.distance}}
+        Run: {{run.id}}
       </li>
     </ul>
   `,
-  providers: [RunService]
+  providers: [
+    HTTP_PROVIDERS,
+    RunService
+  ]
 })
 export class AppComponent implements OnInit {
-  public runs: Run[];
-
   constructor(private runService: RunService) { }
 
+  public runs: Run[];
+  public errorMessage: string;
+
   getRuns() {
-    this.runs = this.runService.getRuns();
+    this.runService.getRuns()
+                     .subscribe(
+                       runs => this.runs = runs,
+                       error => this.errorMessage = <any>error);
   }
 
   ngOnInit() {
