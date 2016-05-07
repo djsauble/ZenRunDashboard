@@ -9,11 +9,12 @@ import {RunService} from './run.service';
   selector: 'my-app',
   template: `
     <h1>Forrest Cruise Dashboard</h1>
-    <ul>
+    <ol>
       <li *ngFor="let run of runs">
-        {{run.timestamp}}
+        <strong>{{run.timestamp}}</strong><br/>
+        {{run._id}}<br/><br/>
       </li>
-    </ul>
+    </ol>
   `,
   providers: [
     HTTP_PROVIDERS,
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit {
     this.runService.getRuns()
                      .subscribe(
                        runs => this.runs = runs.sort((a: Run, b: Run) => {
-                         return (new Date(b.timestamp)) - (new Date(a.timestamp));
+                         return (new Date(b.timestamp)).getTime() - (new Date(a.timestamp)).getTime();
                        }),
                        error => this.errorMessage = <any>error);
   }
